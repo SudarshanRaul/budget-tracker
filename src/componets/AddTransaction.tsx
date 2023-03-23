@@ -4,8 +4,9 @@ import TransactionForm from "./TransactionForm";
 function AddTransaction() {
   return (
     <>
-      <div>add transaction</div>
-      <div>test</div>
+      <div>
+        <h1>Add Transaction</h1>
+      </div>
       <TransactionForm />
     </>
   );

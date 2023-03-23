@@ -1,0 +1,29 @@
+.genericTransactionField label {
+  display: grid;
+  grid-template-columns: 200px 2fr 0.25fr;
+  gap: 10px;
+}
+
+.genericTransactionField.txnDate {
+  grid-column: auto / span 2;
+}
+
+.genericTransactionField .genericTransactionInput input {
+  width: 100%;
+  height: 100%;
+}
+
+.genericLineItemField .genericLineItemInput input {
+  width: calc(100% - 12px);
+  height: 28px;
+}
+
+.genericTransactionField .genericTransactionInput input,
+.genericLineItemField .genericLineItemInput input {
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 0px #1c72e8;
+  border: 0px;
+  padding: 1px 6px;
+  font-size: 18px;
+  color: #393a3d;
+}
