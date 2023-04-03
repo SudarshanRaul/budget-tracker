@@ -7,11 +7,13 @@ import {
   LineItemProperties,
   updateTxnInput,
   TransactionProperties,
+  updateTxnLineInput,
 } from "../types";
 import "./GenericTransactionField.css";
 
 interface GenericLineItemFieldProps {
   lineItemProperty: LineItemProperties;
+  lineRef: number;
 }
 
 interface EventType {
@@ -20,23 +22,25 @@ interface EventType {
   };
 }
 
-function GenericLineItemField({ lineItemProperty }: GenericLineItemFieldProps) {
+function GenericLineItemField({
+  lineItemProperty,
+  lineRef,
+}: GenericLineItemFieldProps) {
   const { label, type }: TransactionInputType =
     LineItemInputs[lineItemProperty];
-  const getTxn = useSelector(getTransaction);
   const getLineItem = useSelector(getLineItemValue);
   const dispatch = useDispatch();
 
-  //   const getTxnValue = getTxn(transactionProperty);
+  const getTxnValue = getLineItem(lineRef, lineItemProperty);
 
   function updateDate({ target: { value } }: EventType) {
-    dispatch(updateTxnInput({ [lineItemProperty]: value }));
+    dispatch(updateTxnLineInput({ [lineItemProperty]: value }, lineRef));
   }
   return (
     <div className={`genericLineItemField ${lineItemProperty}`}>
       <label>
         <div className="genericLineItemInput">
-          <input type={type} value={"getTxnValue"} onChange={updateDate} />
+          <input type={type} value={getTxnValue} onChange={updateDate} />
         </div>
       </label>
     </div>

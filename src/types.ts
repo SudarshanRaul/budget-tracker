@@ -96,6 +96,12 @@ export interface LineItemStateType {
   [LineItemProperties.DESCRIPTION]: string;
 }
 
+export interface LineAmountCalculationFields {
+  [LineItemProperties.AMOUNT]: string;
+  [LineItemProperties.RATE]: string;
+  [LineItemProperties.QUANTITY]: string;
+}
+
 export interface TransactionStateType {
   [TransactionProperties.DATE]: string;
   [TransactionProperties.SUMMARY]: string;
@@ -112,6 +118,10 @@ export interface StateType {
 
 export const UPDATE_TXN_INPUT = "UPDATE_TXN_INPUT";
 export const UPDATE_TXN_LINE_INPUT = "UPDATE_TXN_LINE_INPUT";
+export const ADD_TXN_LINES = "ADD_TXN_LINES";
+export const UPDATE_LINE_RATE = "UPDATE_LINE_RATE";
+export const UPDATE_LINE_QTY = "UPDATE_LINE_QTY";
+export const UPDATE_LINE_AMOUNT = "UPDATE_LINE_AMOUNT";
 
 export const updateTxnInput = (
   updatedState: Partial<TransactionStateType>
@@ -120,12 +130,37 @@ export const updateTxnInput = (
   updatedState,
 });
 export const updateTxnLineInput = (
-  newLineItem: Partial<LineItemStateType>
+  newLineItem: Partial<LineItemStateType>,
+  lineIndex: number
 ) => ({
   type: UPDATE_TXN_LINE_INPUT as typeof UPDATE_TXN_LINE_INPUT,
   newLineItem,
+  lineIndex,
+});
+export const addTxnLines = (lines: number = 1) => ({
+  type: ADD_TXN_LINES as typeof ADD_TXN_LINES,
+  numberOfLines: lines,
+});
+export const updateLineRate = (lineIndex: number, data: string) => ({
+  type: UPDATE_LINE_RATE as typeof UPDATE_LINE_RATE,
+  lineIndex,
+  data,
+});
+export const updateLineQty = (lineIndex: number, data: string) => ({
+  type: UPDATE_LINE_QTY as typeof UPDATE_LINE_QTY,
+  lineIndex,
+  data,
+});
+export const updateLineAmount = (lineIndex: number, data: string) => ({
+  type: UPDATE_LINE_AMOUNT as typeof UPDATE_LINE_AMOUNT,
+  lineIndex,
+  data,
 });
 
 export type ActionType =
+  | ReturnType<typeof addTxnLines>
   | ReturnType<typeof updateTxnInput>
-  | ReturnType<typeof updateTxnLineInput>;
+  | ReturnType<typeof updateTxnLineInput>
+  | ReturnType<typeof updateLineRate>
+  | ReturnType<typeof updateLineQty>
+  | ReturnType<typeof updateLineAmount>;

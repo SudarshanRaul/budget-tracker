@@ -29,10 +29,12 @@ function GenericTransactionField({
   const { label, type }: TransactionInputType =
     TransactionInputs[transactionProperty];
   const getTxn = useSelector(getTransaction);
-  const getLineItem = useSelector(getLineItemValue);
   const dispatch = useDispatch();
 
-  const getTxnValue = getTxn(transactionProperty);
+  let getTxnValue = getTxn(transactionProperty);
+  if (typeof getTxnValue !== "string") {
+    getTxnValue = "";
+  }
 
   function updateDate({ target: { value } }: EventType) {
     dispatch(updateTxnInput({ [transactionProperty]: value }));
