@@ -29,15 +29,15 @@ function LineItems() {
         )}
 
         {lineItems.map((line, lineIndex) => {
-          return Object.keys(LineItemInputs).map(
-            (lineItemProperty: string, index: number) => (
-              <GenericLineItemField
-                lineItemProperty={lineItemProperty as LineItemProperties}
-                lineRef={lineIndex}
-                key={index}
-              />
-            )
-          );
+          return Object.keys(
+            LineItemInputs
+          ).map((lineItemProperty: string, index: number) => (
+            <GenericLineItemField
+              lineItemProperty={lineItemProperty as LineItemProperties}
+              lineRef={lineIndex}
+              key={index}
+            />
+          ));
         })}
       </>
     </div>

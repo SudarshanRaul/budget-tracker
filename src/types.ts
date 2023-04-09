@@ -30,33 +30,35 @@ export interface TransactionInputType {
   label: string;
 }
 
-export const LineItemInputs: Record<LineItemProperties, TransactionInputType> =
-  {
-    [LineItemProperties.PRODUCT_AND_SERVICES]: {
-      type: "dropDown",
-      label: "Item",
-    },
-    [LineItemProperties.CATEGORY]: {
-      type: "dropDown",
-      label: "Category",
-    },
-    [LineItemProperties.DESCRIPTION]: {
-      type: "text",
-      label: "Description",
-    },
-    [LineItemProperties.RATE]: {
-      type: "number",
-      label: "Rate",
-    },
-    [LineItemProperties.QUANTITY]: {
-      type: "number",
-      label: "Quantity",
-    },
-    [LineItemProperties.AMOUNT]: {
-      type: "number",
-      label: "Amount",
-    },
-  };
+export const LineItemInputs: Record<
+  LineItemProperties,
+  TransactionInputType
+> = {
+  [LineItemProperties.PRODUCT_AND_SERVICES]: {
+    type: "dropDown",
+    label: "Item",
+  },
+  [LineItemProperties.CATEGORY]: {
+    type: "dropDown",
+    label: "Category",
+  },
+  [LineItemProperties.DESCRIPTION]: {
+    type: "text",
+    label: "Description",
+  },
+  [LineItemProperties.RATE]: {
+    type: "number",
+    label: "Rate",
+  },
+  [LineItemProperties.QUANTITY]: {
+    type: "number",
+    label: "Quantity",
+  },
+  [LineItemProperties.AMOUNT]: {
+    type: "number",
+    label: "Amount",
+  },
+};
 
 export const TransactionInputs: Record<
   Exclude<
