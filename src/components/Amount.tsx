@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { getTransaction } from "../reducer";
+import { getTransaction } from "../reducers/transactionReducer";
 import { TransactionProperties } from "../types";
 import "./Amount.css";
 

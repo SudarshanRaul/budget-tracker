@@ -32,13 +32,13 @@ export interface TransactionInputType {
 
 export const LineItemInputs: Record<LineItemProperties, TransactionInputType> =
   {
+    [LineItemProperties.PRODUCT_AND_SERVICES]: {
+      type: "dropDown",
+      label: "Item",
+    },
     [LineItemProperties.CATEGORY]: {
       type: "dropDown",
       label: "Category",
-    },
-    [LineItemProperties.PRODUCT_AND_SERVICES]: {
-      type: "dropDown",
-      label: "Product/Service",
     },
     [LineItemProperties.DESCRIPTION]: {
       type: "text",
@@ -73,13 +73,13 @@ export const TransactionInputs: Record<
     type: "text",
     label: "Transaction Summary",
   },
-  [TransactionProperties.DESCRIPTION]: {
-    type: "text",
-    label: "Transaction Description",
-  },
   [TransactionProperties.PAYMENT_METHOD]: {
     type: "text",
     label: "Payment Method",
+  },
+  [TransactionProperties.DESCRIPTION]: {
+    type: "text",
+    label: "Transaction Description",
   },
   [TransactionProperties.PAYMENT_REFERENCE]: {
     type: "text",
@@ -112,8 +112,31 @@ export interface TransactionStateType {
   [TransactionProperties.LINE]: [LineItemStateType];
 }
 
+export interface ValidationMsgType {
+  [TransactionProperties.DATE]: string;
+  [TransactionProperties.SUMMARY]: string;
+  [TransactionProperties.DESCRIPTION]: string;
+  [TransactionProperties.AMOUNT]: string;
+  [TransactionProperties.PAYMENT_METHOD]: string;
+  [TransactionProperties.PAYMENT_REFERENCE]: string;
+  [TransactionProperties.LINE]: string;
+}
+
+export enum ValidationMessage {
+  TXN_DATE = "Enter Transaction Date",
+  TXN_SUMMARY = "Enter Transaction Summary",
+  TXN_PAYMENT_METHOD = "Enter payment Method",
+  TXN_LINE = "Enter minimum one Transaction Line",
+}
+
+export interface ValidationStateType {
+  isValid: boolean;
+  message: ValidationMsgType;
+}
+
 export interface StateType {
   transaction: TransactionStateType;
+  validation: ValidationStateType;
 }
 
 export const UPDATE_TXN_INPUT = "UPDATE_TXN_INPUT";
@@ -122,6 +145,8 @@ export const ADD_TXN_LINES = "ADD_TXN_LINES";
 export const UPDATE_LINE_RATE = "UPDATE_LINE_RATE";
 export const UPDATE_LINE_QTY = "UPDATE_LINE_QTY";
 export const UPDATE_LINE_AMOUNT = "UPDATE_LINE_AMOUNT";
+export const SAVE_TXN = "SAVE_TXN";
+export const VALIDATE_TXN = "VALIDATE_TXN";
 
 export const updateTxnInput = (
   updatedState: Partial<TransactionStateType>
@@ -156,6 +181,13 @@ export const updateLineAmount = (lineIndex: number, data: string) => ({
   lineIndex,
   data,
 });
+export const saveTxn = () => ({
+  type: SAVE_TXN as typeof SAVE_TXN,
+});
+export const validateTxn = (validationObj: ValidationStateType) => ({
+  type: VALIDATE_TXN as typeof VALIDATE_TXN,
+  validationObj,
+});
 
 export type ActionType =
   | ReturnType<typeof addTxnLines>
@@ -163,4 +195,5 @@ export type ActionType =
   | ReturnType<typeof updateTxnLineInput>
   | ReturnType<typeof updateLineRate>
   | ReturnType<typeof updateLineQty>
-  | ReturnType<typeof updateLineAmount>;
+  | ReturnType<typeof updateLineAmount>
+  | ReturnType<typeof validateTxn>;

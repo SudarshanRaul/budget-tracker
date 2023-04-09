@@ -1,5 +1,8 @@
 import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
-import { getLineItemAmount, getTransaction } from "../reducer";
+import {
+  getLineItemAmount,
+  getTransaction,
+} from "../reducers/transactionReducer";
 import {
   ActionType,
   LineItemStateType,

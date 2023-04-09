@@ -9,8 +9,8 @@ import {
   LineItemStateType,
   LineItemProperties,
   ADD_TXN_LINES,
-} from "./types";
-import { calculateLineAmount, calculatorUtil } from "./utils/calculateAmount";
+} from "../types";
+import { calculateLineAmount, calculatorUtil } from "../utils/calculateAmount";
 
 const initialLineItemsState: LineItemStateType = {
   [LineItemProperties.CATEGORY]: "",
@@ -73,4 +73,8 @@ export function getLineItemAmount(state: StateType) {
   return state?.transaction[TransactionProperties.LINE].map(
     ({ amount }) => amount
   );
+}
+
+export function getTransactionState(state: StateType) {
+  return state?.transaction;
 }
