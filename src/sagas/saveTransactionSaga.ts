@@ -67,7 +67,6 @@ export function* saveTransactionSaga(action: ActionType) {
     const transaction = (yield select(
       getTransactionState
     ) as unknown) as TransactionStateType;
-    console.log(transaction);
     addRecord(transaction);
   }
 }

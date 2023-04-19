@@ -9,6 +9,7 @@ import {
   LineItemStateType,
   LineItemProperties,
   ADD_TXN_LINES,
+  UPDATE_TXN_MODE,
 } from "../types";
 import { calculateLineAmount, calculatorUtil } from "../utils/calculateAmount";
 
@@ -29,6 +30,7 @@ const initialTransactionState: TransactionStateType = {
   [TransactionProperties.PAYMENT_METHOD]: "",
   [TransactionProperties.PAYMENT_REFERENCE]: "",
   [TransactionProperties.LINE]: [initialLineItemsState],
+  mode: null,
 };
 
 export function transactionReducer(
@@ -52,6 +54,11 @@ export function transactionReducer(
       return {
         ...state,
         [TransactionProperties.LINE]: lineItemState,
+      };
+    case UPDATE_TXN_MODE:
+      return {
+        ...state,
+        mode: action.mode,
       };
     default:
       return {

@@ -12,10 +12,12 @@ function Amount() {
   const rupee = new Intl.NumberFormat("en-IN").format(
     parseInt(txnAmount.split(".")[0])
   );
-  const paise = parseFloat(txnAmount).toFixed(2).split(".")[1];
+  const paise = parseFloat(txnAmount)
+    .toFixed(2)
+    .split(".")[1];
   return (
     <div className="AmountContainer">
-      <span className="inr-symbol">₹</span>
+      <span className="currency-symbol">$</span>
       <span className="rupee">{rupee}</span>
       <span className="paise">{paise}</span>
     </div>

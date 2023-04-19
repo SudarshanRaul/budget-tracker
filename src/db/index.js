@@ -7,7 +7,7 @@ const TransactionObject = "transactions";
 const TransactionIndex = [
   { index: "paymentMethod", unique: false },
   { index: "txnDate", unique: false },
-  { index: "isEstimate", unique: false },
+  { index: "mode", unique: false },
 ];
 const CategoryObject = "categories";
 const ItemObject = "items";
@@ -18,7 +18,7 @@ const ItemIndex = [
 let db;
 const dbVersion = 1;
 
-const dbObject = window.indexedDB.open(DBName, dbVersion);
+export const dbObject = window.indexedDB.open(DBName, dbVersion);
 dbObject.onerror = (error) => {
   console.error(error);
 };
@@ -67,4 +67,18 @@ export function fetchRecord(id) {
   getRecord.onsuccess = () => {
     console.log(getRecord.result);
   };
+}
+
+function fetchAllRecordPromise(resolve) {
+  const objectStore = db
+    .transaction([TransactionObject], "readwrite")
+    .objectStore(TransactionObject);
+  const getAllRecords = objectStore.getAll();
+  getAllRecords.onsuccess = () => {
+    resolve(getAllRecords.result);
+  };
+}
+
+export function fetchAllRecord() {
+  return new Promise(fetchAllRecordPromise);
 }

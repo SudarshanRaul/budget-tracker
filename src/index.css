@@ -194,3 +194,8 @@ h1 {
   border-bottom: 1px dashed;
   padding: 5px 0 10px;
 }
+
+.transaction-list-grid {
+  display: grid;
+  grid-template-columns: 10% repeat(3, 33.33%);
+}

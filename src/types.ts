@@ -30,35 +30,33 @@ export interface TransactionInputType {
   label: string;
 }
 
-export const LineItemInputs: Record<
-  LineItemProperties,
-  TransactionInputType
-> = {
-  [LineItemProperties.PRODUCT_AND_SERVICES]: {
-    type: "dropDown",
-    label: "Item",
-  },
-  [LineItemProperties.CATEGORY]: {
-    type: "dropDown",
-    label: "Category",
-  },
-  [LineItemProperties.DESCRIPTION]: {
-    type: "text",
-    label: "Description",
-  },
-  [LineItemProperties.RATE]: {
-    type: "number",
-    label: "Rate",
-  },
-  [LineItemProperties.QUANTITY]: {
-    type: "number",
-    label: "Quantity",
-  },
-  [LineItemProperties.AMOUNT]: {
-    type: "number",
-    label: "Amount",
-  },
-};
+export const LineItemInputs: Record<LineItemProperties, TransactionInputType> =
+  {
+    [LineItemProperties.PRODUCT_AND_SERVICES]: {
+      type: "dropDown",
+      label: "Item",
+    },
+    [LineItemProperties.CATEGORY]: {
+      type: "dropDown",
+      label: "Category",
+    },
+    [LineItemProperties.DESCRIPTION]: {
+      type: "text",
+      label: "Description",
+    },
+    [LineItemProperties.RATE]: {
+      type: "number",
+      label: "Rate",
+    },
+    [LineItemProperties.QUANTITY]: {
+      type: "number",
+      label: "Quantity",
+    },
+    [LineItemProperties.AMOUNT]: {
+      type: "number",
+      label: "Amount",
+    },
+  };
 
 export const TransactionInputs: Record<
   Exclude<
@@ -82,6 +80,10 @@ export const TransactionInputs: Record<
   [TransactionProperties.DESCRIPTION]: {
     type: "text",
     label: "Transaction Description",
+  },
+  [TransactionProperties.PAYMENT_REFERENCE]: {
+    type: "text",
+    label: "Payment Reference",
   },
   [TransactionProperties.PAYMENT_REFERENCE]: {
     type: "text",
@@ -112,6 +114,7 @@ export interface TransactionStateType {
   [TransactionProperties.PAYMENT_METHOD]: string;
   [TransactionProperties.PAYMENT_REFERENCE]: string;
   [TransactionProperties.LINE]: [LineItemStateType];
+  mode: TransactionMode | null;
 }
 
 export interface ValidationMsgType {
@@ -136,9 +139,24 @@ export interface ValidationStateType {
   message: ValidationMsgType;
 }
 
+export interface TransactionListStateType {
+  [TransactionProperties.DATE]: string;
+  [TransactionProperties.SUMMARY]: string;
+  [TransactionProperties.DESCRIPTION]: string;
+  [TransactionProperties.AMOUNT]: string;
+  [TransactionProperties.PAYMENT_METHOD]: string;
+  [TransactionProperties.PAYMENT_REFERENCE]: string;
+  id: number;
+}
+
+export interface TransactionListResponseType extends TransactionListStateType {
+  id: number;
+}
+
 export interface StateType {
   transaction: TransactionStateType;
   validation: ValidationStateType;
+  transactionList: [TransactionListStateType] | [];
 }
 
 export const UPDATE_TXN_INPUT = "UPDATE_TXN_INPUT";
@@ -149,12 +167,19 @@ export const UPDATE_LINE_QTY = "UPDATE_LINE_QTY";
 export const UPDATE_LINE_AMOUNT = "UPDATE_LINE_AMOUNT";
 export const SAVE_TXN = "SAVE_TXN";
 export const VALIDATE_TXN = "VALIDATE_TXN";
+export const UPDATE_LIST = "UPDATE_LIST";
+export const FETCH_TXN_LIST = "FETCH_TXN_LIST";
+export const UPDATE_TXN_MODE = "UPDATE_TXN_MODE";
 
 export const updateTxnInput = (
   updatedState: Partial<TransactionStateType>
 ) => ({
   type: UPDATE_TXN_INPUT as typeof UPDATE_TXN_INPUT,
   updatedState,
+});
+export const updateTxnMode = (mode: TransactionMode) => ({
+  type: UPDATE_TXN_MODE as typeof UPDATE_TXN_MODE,
+  mode,
 });
 export const updateTxnLineInput = (
   newLineItem: Partial<LineItemStateType>,
@@ -190,6 +215,13 @@ export const validateTxn = (validationObj: ValidationStateType) => ({
   type: VALIDATE_TXN as typeof VALIDATE_TXN,
   validationObj,
 });
+export const updateList = (list: Array<TransactionListStateType>) => ({
+  type: UPDATE_LIST as typeof UPDATE_LIST,
+  list,
+});
+export const fetchTxnList = () => ({
+  type: FETCH_TXN_LIST as typeof FETCH_TXN_LIST,
+});
 
 export type ActionType =
   | ReturnType<typeof addTxnLines>
@@ -198,4 +230,11 @@ export type ActionType =
   | ReturnType<typeof updateLineRate>
   | ReturnType<typeof updateLineQty>
   | ReturnType<typeof updateLineAmount>
-  | ReturnType<typeof validateTxn>;
+  | ReturnType<typeof validateTxn>
+  | ReturnType<typeof updateList>
+  | ReturnType<typeof updateTxnMode>;
+
+export enum TransactionMode {
+  ESTIMATE = "ESTIMATE",
+  ACTUAL = "ACTUAL",
+}

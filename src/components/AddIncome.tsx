@@ -4,19 +4,11 @@ import { TransactionMode, updateTxnMode } from "../types";
 import FooterAction from "./FooterAction";
 import TransactionForm from "./TransactionForm";
 
-export interface AddTransactionPropsTypes {
-  mode: TransactionMode;
-}
-
-function AddTransaction({ mode }: AddTransactionPropsTypes) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(updateTxnMode(mode));
-  });
+function AddIncome() {
   return (
     <>
       <div>
-        <h1>Add Transaction - {mode}</h1>
+        <h1>Add Income</h1>
       </div>
       <TransactionForm />
       <FooterAction />
@@ -24,4 +16,4 @@ function AddTransaction({ mode }: AddTransactionPropsTypes) {
   );
 }
 
-export default AddTransaction;
+export default AddIncome;
