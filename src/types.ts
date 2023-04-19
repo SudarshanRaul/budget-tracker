@@ -238,3 +238,22 @@ export enum TransactionMode {
   ESTIMATE = "ESTIMATE",
   ACTUAL = "ACTUAL",
 }
+
+export const incomeFields = {
+  incomeDate: {
+    label: "Date",
+    type: "date",
+  },
+  incomeAmount: {
+    label: "Amount",
+    type: "number",
+  },
+  incomeType: {
+    label: "Type",
+    type: "number",
+  },
+  incomeNotes: {
+    label: "Notes",
+    type: "text",
+  },
+};
